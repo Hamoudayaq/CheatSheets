@@ -44,4 +44,35 @@ layout: default
 </td><td align="left" valign="top">Quit.</td></tr><tr><td align="left" valign="top">
 <span class="keycap"><strong>f</strong></span>
 </td><td align="left" valign="top">Manage the columns by enabling or disabling fields. You can also set the sort field for <code class="code">top</code>.</td></tr></tbody></table></div></div>
+
+### Process Control with Signals
+
+```
+[root@host ~]# pkill -SIGKILL -u bob
+```
+
+<div class="table"><a id="idm45741847663248"></a><p class="title"><strong>Table&nbsp;8.2.&nbsp;Fundamental process management signals</strong></p><div class="table-contents"><table border="1" class="table" summary="Fundamental process management signals"><colgroup><col class="c1"><col class="c2"><col class="c3"></colgroup><thead><tr><th align="left" valign="top">Signal</th><th align="left" valign="top">Name</th><th align="left" valign="top">Definition</th></tr></thead><tbody><tr><td align="left" valign="top">1</td><td align="left" valign="top">HUP</td><td align="left" valign="top">
+<code class="code">Hangup</code> : Reports termination of the controlling process of a terminal. Also requests process re-initialization (configuration reload) without termination.</td></tr><tr><td align="left" valign="top">2</td><td align="left" valign="top">INT</td><td align="left" valign="top">
+<code class="code">Keyboard interrupt</code> : Causes program termination. It can be blocked or handled. Sent by pressing the INTR (Interrupt) key sequence (<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>c</strong></span>).</td></tr><tr><td align="left" valign="top">3</td><td align="left" valign="top">QUIT</td><td align="left" valign="top">
+<code class="code">Keyboard quit</code> : Similar to SIGINT; adds a process dump at termination. Sent by pressing the QUIT key sequence (<span class="keycap"><strong>Ctrl+\</strong></span>).</td></tr><tr><td align="left" valign="top">9</td><td align="left" valign="top">KILL</td><td align="left" valign="top">
+<code class="code">Kill, unblockable</code> : Causes abrupt program termination. It cannot be blocked, ignored, or handled; consistently fatal.</td></tr><tr><td align="left" valign="top">15 <span class="emphasis"><em>default</em></span>
+</td><td align="left" valign="top">TERM</td><td align="left" valign="top">
+<code class="code">Terminate</code> : Causes program termination. Unlike SIGKILL, it can be blocked, ignored, or handled. The "clean" way to ask a program to terminate; it allows the program to complete essential operations and self-cleanup before termination.</td></tr><tr><td align="left" valign="top">18</td><td align="left" valign="top">CONT</td><td align="left" valign="top">
+<code class="code">Continue</code> : Sent to a process to resume if stopped. It cannot be blocked. Even if handled, it always resumes the process.</td></tr><tr><td align="left" valign="top">19</td><td align="left" valign="top">STOP</td><td align="left" valign="top">
+<code class="code">Stop, unblockable</code> : Suspends the process. It cannot be blocked or handled.</td></tr><tr><td align="left" valign="top">20</td><td align="left" valign="top">TSTP</td><td align="left" valign="top">
+<code class="code">Keyboard stop</code> : Unlike SIGSTOP, it can be blocked, ignored, or handled. Sent by pressing the suspend key sequence (<span class="keycap"><strong>Ctrl</strong></span>+<span class="keycap"><strong>z</strong></span>).</td></tr></tbody></table></div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 [back](./another-page.html)
