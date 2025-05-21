@@ -44,4 +44,4 @@ layout: default
 </td><td align="left" valign="top">Quit.</td></tr><tr><td align="left" valign="top">
 <span class="keycap"><strong>f</strong></span>
 </td><td align="left" valign="top">Manage the columns by enabling or disabling fields. You can also set the sort field for <code class="code">top</code>.</td></tr></tbody></table></div></div>
-[back](./)
+[back](./another-page.html)
