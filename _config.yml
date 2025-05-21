@@ -1,6 +1,6 @@
 title: Modernist theme
 description: Modernist is a theme for GitHub Pages.
-show_downloads: true
+show_downloads: false
 google_analytics:
 theme: jekyll-theme-modernist
 remote_theme: pages-themes/modernist@v0.2.0
