@@ -2,9 +2,13 @@
 layout: default
 ---
 
-## Welcome to another page
+## Monitor process activity
 
-Table 8.3. Fundamental Keystrokes in top Command
+```
+[student@workstation ~]$ top 
+```
+
+Fundamental Keystrokes in top Command
 
 <div class="table"><a id="idm45741847401152"></a><p class="title"><strong>Table&nbsp;8.3.&nbsp;Fundamental Keystrokes in <code class="code">top</code> Command</strong></p><div class="table-contents"><table border="1" class="table" summary="Fundamental Keystrokes in top Command"><colgroup><col class="c1"><col class="c2"></colgroup><thead><tr><th align="left" valign="top">Key</th><th align="left" valign="top">Purpose</th></tr></thead><tbody><tr><td align="left" valign="top">
 <span class="keycap"><strong>?</strong></span>
