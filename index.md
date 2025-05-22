@@ -67,8 +67,9 @@ layout: default
 
 
 ## Configure and secure SSH
-#### SSH Client Configuration
-<div class="section"><div class="titlepage"><div><div><h4 class="title"><a id="sshconfigure-_ssh_client_configuration"></a>SSH Client Configuration</h4></div></div></div><p>You can create the <code class="code">~/.ssh/config</code> file to preconfigure SSH connections. Within the configuration file, you can specify connection parameters such as users, keys, and ports for specific hosts. This file eliminates the need to manually specify command parameters each time that you connect to a host. Consider the following <code class="code">~/.ssh/config</code> file, which preconfigures two host connections with different users and keys:</p><pre class="screen">[user@host ~]$ <strong class="userinput"><code>cat ~/.ssh/config</code></strong>
+<div class="section"><div class="titlepage"><div><div><h4 class="title"><a id="sshconfigure-_ssh_client_configuration"></a>SSH Client Configuration</h4></div></div></div><p>You can create the <code class="code">~/.ssh/config</code> file to preconfigure SSH connections. Within the configuration file, you can specify connection parameters such as users, keys, and ports for specific hosts. This file eliminates the need to manually specify command parameters each time that you connect to a host. Consider the following <code class="code">~/.ssh/config</code> file, which preconfigures two host connections with different users and keys:</p>
+
+<pre class="screen">[user@host ~]$ <strong class="userinput"><code>cat ~/.ssh/config</code></strong>
 host servera
      HostName                      servera.example.com
      User                          usera
@@ -77,9 +78,8 @@ host servera
 host serverb
      HostName                      serverb.example.com
      User                          userb
-     IdentityFile                  ~/.ssh/id_rsa_serverb</pre><div class="note references"><h3 class="title">References</h3><p>
-<code class="code">ssh-keygen</code>(1), <code class="code">ssh-copy-id</code>(1), <code class="code">ssh-agent</code>(1), and <code class="code">ssh-add</code>(1) man pages</p></div><p></p></div>
-
+     IdentityFile                  ~/.ssh/id_rsa_serverb
+</pre>
 
 
 
