@@ -1,6 +1,9 @@
 ---
 layout: default
 ---
+
+<img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.pngplay.com%2Fwp-content%2Fuploads%2F6%2FUnder-Construction-Icon-PNG.png" alt="Description of the photo" width="500" />
+
 [back](./another-page.html).
 
 ## Monitor process activity
