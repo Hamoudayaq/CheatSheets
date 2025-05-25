@@ -95,7 +95,7 @@ host serverb
 
 ## Manage Network
 
-<div class="table"><a id="idm45741845185552"></a><p class="title"><strong>Table&nbsp;11.5.&nbsp;Common IPv6 Addresses and Networks</strong></p><div class="table-contents"><table border="1" class="table" summary="Common IPv6 Addresses and Networks"><colgroup><col class="c1"><col class="c2"><col class="c3"></colgroup><thead><tr><th align="left" valign="top">IPv6 address or network</th><th align="left" valign="top">Purpose</th><th align="left" valign="top">Description</th></tr></thead><tbody><tr><td align="left" valign="top">
+<div class="table"><a id="idm45741845185552"></a><p class="title"><strong>Common IPv6 Addresses and Networks</strong></p><div class="table-contents"><table border="1" class="table" summary="Common IPv6 Addresses and Networks"><colgroup><col class="c1"><col class="c2"><col class="c3"></colgroup><thead><tr><th align="left" valign="top">IPv6 address or network</th><th align="left" valign="top">Purpose</th><th align="left" valign="top">Description</th></tr></thead><tbody><tr><td align="left" valign="top">
 <code class="code">::1/128</code>
 </td><td align="left" valign="top">localhost</td><td align="left" valign="top">The IPv6 equivalent to the <code class="code">127.0.0.1/8</code> address, which is set on the loopback interface.</td></tr><tr><td align="left" valign="top">
 <code class="code">::</code>
@@ -111,3 +111,186 @@ host serverb
 However, the entire <code class="code">fe80::/10</code> range is reserved for future use by the local link. This topic is discussed in more detail later.</td></tr><tr><td align="left" valign="top">
 <code class="code">ff00::/8</code>
 </td><td align="left" valign="top">Multicast</td><td align="left" valign="top">The IPv6 equivalent to the <code class="code">224.0.0.0/4</code> address. Multicast is used to transmit to multiple hosts at the same time, and is particularly important in IPv6 because it has no broadcast addresses.</td></tr></tbody></table></div></div>
+
+
+### Edit Network Configuration Files
+
+
+<div class="table"><a id="idm45741844597920"></a><p class="title"><strong>Comparison of NetworkManager Settings and Key File Format File</strong></p><div class="table-contents"><table border="1" class="table" summary="Comparison of NetworkManager Settings and Key File Format File"><colgroup><col class="c1"><col class="c2"><col class="c3"></colgroup><thead><tr><th align="left" valign="top">
+<code class="code">nmcli con mod</code>
+</th><th align="left" valign="top">
+<code class="code">*.nmconnection</code> file</th><th align="left" valign="top">Effect</th></tr></thead><tbody><tr><td align="left" valign="top">
+<code class="code">ipv4.method manual</code>
+</td><td align="left" valign="top">
+<p>
+<code class="code">[ipv4]</code>
+</p>
+<p>
+<code class="code">method=manual</code>
+</p>
+</td><td align="left" valign="top">Configure IPv4 addresses statically.</td></tr><tr><td align="left" valign="top">
+<code class="code">ipv4.method auto</code>
+</td><td align="left" valign="top">
+<p>
+<code class="code">[ipv4]</code>
+</p>
+<p>
+<code class="code">method=auto</code>
+</p>
+</td><td align="left" valign="top">Look for configuration settings from a DHCPv4 server. It shows static addresses only when it has information from DHCPv4.</td></tr><tr><td align="left" valign="top">
+<code class="code">ipv4.addresses 192.0.2.1/24</code>
+</td><td align="left" valign="top">
+<p>
+<code class="code">[ipv4]</code>
+</p>
+<p>
+<code class="code">address1=192.0.2.1/24</code>
+</p>
+</td><td align="left" valign="top">Set a static IPv4 address and network prefix.
+For more than one connection address, the <code class="code">address2</code> key defines the second address, and the <code class="code">address3</code> key defines the third address.</td></tr><tr><td align="left" valign="top">
+<code class="code">ipv4.gateway 192.0.2.254</code>
+</td><td align="left" valign="top">
+<p>
+<code class="code">[ipv4]</code>
+</p>
+<p>
+<code class="code">gateway=192.0.2.254</code>
+</p>
+</td><td align="left" valign="top">Set the default gateway.</td></tr><tr><td align="left" valign="top">
+<code class="code">ipv4.dns 8.8.8.8</code>
+</td><td align="left" valign="top">
+<p>
+<code class="code">[ipv4]</code>
+</p>
+<p>
+<code class="code">dns=8.8.8.8</code>
+</p>
+</td><td align="left" valign="top">Modify <code class="code">/etc/resolv.conf</code> to use this name server.</td></tr><tr><td align="left" valign="top">
+<code class="code">ipv4.dns-search example.com</code>
+</td><td align="left" valign="top">
+<p>
+<code class="code">[ipv4]</code>
+</p>
+<p>
+<code class="code">dns-search=example.com</code>
+</p>
+</td><td align="left" valign="top">Modify <code class="code">/etc/resolv.conf</code> to use this domain in the <code class="code">search</code> directive.</td></tr><tr><td align="left" valign="top">
+<code class="code">ipv4.ignore-auto-dns true</code>
+</td><td align="left" valign="top">
+<p>
+<code class="code">[ipv4]</code>
+</p>
+<p>
+<code class="code">ignore-auto-dns=true</code>
+</p>
+</td><td align="left" valign="top">Ignore DNS server information from the DHCP server.</td></tr><tr><td align="left" valign="top">
+<code class="code">ipv6.method manual</code>
+</td><td align="left" valign="top">
+<p>
+<code class="code">[ipv6]</code>
+</p>
+<p>
+<code class="code">method=manual</code>
+</p>
+</td><td align="left" valign="top">Configure IPv6 addresses statically.</td></tr><tr><td align="left" valign="top">
+<code class="code">ipv6.method auto</code>
+</td><td align="left" valign="top">
+<p>
+<code class="code">[ipv6]</code>
+</p>
+<p>
+<code class="code">method=auto</code>
+</p>
+</td><td align="left" valign="top">Configure network settings with SLAAC from router advertisements.</td></tr><tr><td align="left" valign="top">
+<code class="code">ipv6.method dhcp</code>
+</td><td align="left" valign="top">
+<p>
+<code class="code">[ipv6]</code>
+</p>
+<p>
+<code class="code">method=dhcp</code>
+</p>
+</td><td align="left" valign="top">Configure network settings by using DHCPv6, but not by using SLAAC.</td></tr><tr><td align="left" valign="top">
+<code class="code">ipv6.addresses 2001:db8::a/64</code>
+</td><td align="left" valign="top">
+<p>
+<code class="code">[ipv6]</code>
+</p>
+<p>
+<code class="code">address1=2001:db8::a/64</code>
+</p>
+</td><td align="left" valign="top">Set a static IPv6 address and network prefix.
+When using more than one address for a connection, the <code class="code">address2</code> key defines the second address, and the <code class="code">address3</code> key defines the third address.</td></tr><tr><td align="left" valign="top">
+<code class="code">ipv6.gateway 2001:db8::1</code>
+</td><td align="left" valign="top">
+<p>
+<code class="code">[ipv6]</code>
+</p>
+<p>
+<code class="code">gateway=2001:db8::1</code>
+</p>
+</td><td align="left" valign="top">Set the default gateway.</td></tr><tr><td align="left" valign="top">
+<code class="code">ipv6.dns fde2:6494:1e09:2::d</code>
+</td><td align="left" valign="top">
+<p>
+<code class="code">[ipv6]</code>
+</p>
+<p>
+<code class="code">dns=fde2:6494:1e09:2::d</code>
+</p>
+</td><td align="left" valign="top">Modify <code class="code">/etc/resolv.conf</code> to use this name server.
+The same as IPv4.</td></tr><tr><td align="left" valign="top">
+<code class="code">ipv6.dns-search example.com</code>
+</td><td align="left" valign="top">
+<p>
+<code class="code">[ipv6]</code>
+</p>
+<p>
+<code class="code">dns-search=example.com</code>
+</p>
+</td><td align="left" valign="top">Modify <code class="code">/etc/resolv.conf</code> to use this domain in the <code class="code">search</code> directive.</td></tr><tr><td align="left" valign="top">
+<code class="code">ipv6.ignore-auto-dns true</code>
+</td><td align="left" valign="top">
+<p>
+<code class="code">[ipv6]</code>
+</p>
+<p>
+<code class="code">ignore-auto-dns=true</code>
+</p>
+</td><td align="left" valign="top">Ignore DNS server information from the DHCP server.</td></tr><tr><td align="left" valign="top">
+<code class="code">connection.autoconnect yes</code>
+</td><td align="left" valign="top">
+<p>
+<code class="code">[connection]</code>
+</p>
+<p>
+<code class="code">autoconnect=true</code>
+</p>
+</td><td align="left" valign="top">Automatically activate this connection at boot.</td></tr><tr><td align="left" valign="top">
+<code class="code">connection.id ens3</code>
+</td><td align="left" valign="top">
+<p>
+<code class="code">[connection]</code>
+</p>
+<p>
+<code class="code">id=Main eth0</code>
+</p>
+</td><td align="left" valign="top">The name of this connection.</td></tr><tr><td align="left" valign="top">
+<code class="code">connection.interface-name ens3</code>
+</td><td align="left" valign="top">
+<p>
+<code class="code">[connection]</code>
+</p>
+<p>
+<code class="code">interface-name=ens3</code>
+</p>
+</td><td align="left" valign="top">The connection is bound to the network interface with this name.</td></tr><tr><td align="left" valign="top">
+<code class="code">802-3-ethernet.mac-address …​</code>
+</td><td align="left" valign="top">
+<p>
+<code class="code">[802-3-ethernet]</code>
+</p>
+<p>
+<code class="code">mac-address=</code>
+</p>
+</td><td align="left" valign="top">The connection is bound to the network interface with this MAC address.</td></tr></tbody></table></div></div>
