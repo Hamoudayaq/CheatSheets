@@ -92,3 +92,22 @@ host serverb
 
 
 
+
+## Manage Network
+
+<div class="table"><a id="idm45741845185552"></a><p class="title"><strong>Table&nbsp;11.5.&nbsp;Common IPv6 Addresses and Networks</strong></p><div class="table-contents"><table border="1" class="table" summary="Common IPv6 Addresses and Networks"><colgroup><col class="c1"><col class="c2"><col class="c3"></colgroup><thead><tr><th align="left" valign="top">IPv6 address or network</th><th align="left" valign="top">Purpose</th><th align="left" valign="top">Description</th></tr></thead><tbody><tr><td align="left" valign="top">
+<code class="code">::1/128</code>
+</td><td align="left" valign="top">localhost</td><td align="left" valign="top">The IPv6 equivalent to the <code class="code">127.0.0.1/8</code> address, which is set on the loopback interface.</td></tr><tr><td align="left" valign="top">
+<code class="code">::</code>
+</td><td align="left" valign="top">The unspecified address</td><td align="left" valign="top">The IPv6 equivalent to <code class="code">0.0.0.0</code>. For a network service, it might indicate that it is listening on all configured IP addresses.</td></tr><tr><td align="left" valign="top">
+<code class="code">::/0</code>
+</td><td align="left" valign="top">The default route (the IPv6 internet)</td><td align="left" valign="top">The IPv6 equivalent to the <code class="code">0.0.0.0/0</code> address. The default route in the routing table matches this network; the router for this network is where all traffic is sent in the absence of a better route.</td></tr><tr><td align="left" valign="top">
+<code class="code">2000::/3</code>
+</td><td align="left" valign="top">Global unicast addresses</td><td align="left" valign="top">The <span class="emphasis"><em>Internet Assigned Numbers Authority (IANA)</em></span> currently allocates "normal" IPv6 addresses from this space. The addresses include all the networks that range from <code class="code">2000::/16</code> through <code class="code">3fff::/16</code>.</td></tr><tr><td align="left" valign="top">
+<code class="code">fd00::/8</code>
+</td><td align="left" valign="top">Unique local addresses (RFC 4193)</td><td align="left" valign="top">IPv6 has no direct equivalent of the RFC 1918 private address space, although this network range is close. A site can use these networks to self-allocate a private routable IP address space inside the organization. However, these networks cannot be used on the global internet. The site must randomly select a <code class="code">/48</code> from this space, but it can subnet the allocation into <code class="code">/64</code> networks normally.</td></tr><tr><td align="left" valign="top">
+<code class="code">fe80::/10</code>
+</td><td align="left" valign="top">Link-local addresses</td><td align="left" valign="top">Every IPv6 interface automatically configures a link-local unicast address that works only on the local link on the <code class="code">fe80::/64</code> network.
+However, the entire <code class="code">fe80::/10</code> range is reserved for future use by the local link. This topic is discussed in more detail later.</td></tr><tr><td align="left" valign="top">
+<code class="code">ff00::/8</code>
+</td><td align="left" valign="top">Multicast</td><td align="left" valign="top">The IPv6 equivalent to the <code class="code">224.0.0.0/4</code> address. Multicast is used to transmit to multiple hosts at the same time, and is particularly important in IPv6 because it has no broadcast addresses.</td></tr></tbody></table></div></div>
