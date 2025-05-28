@@ -85,14 +85,6 @@ host serverb
      IdentityFile                  ~/.ssh/id_rsa_serverb
 </pre>
 
-
-
-
-
-
-
-
-
 ## Manage Network
 
 <div class="table"><a id="idm45741845185552"></a><p class="title"><strong>Common IPv6 Addresses and Networks</strong></p><div class="table-contents"><table border="1" class="table" summary="Common IPv6 Addresses and Networks"><colgroup><col class="c1"><col class="c2"><col class="c3"></colgroup><thead><tr><th align="left" valign="top">IPv6 address or network</th><th align="left" valign="top">Purpose</th><th align="left" valign="top">Description</th></tr></thead><tbody><tr><td align="left" valign="top">
@@ -111,7 +103,6 @@ host serverb
 However, the entire <code class="code">fe80::/10</code> range is reserved for future use by the local link. This topic is discussed in more detail later.</td></tr><tr><td align="left" valign="top">
 <code class="code">ff00::/8</code>
 </td><td align="left" valign="top">Multicast</td><td align="left" valign="top">The IPv6 equivalent to the <code class="code">224.0.0.0/4</code> address. Multicast is used to transmit to multiple hosts at the same time, and is particularly important in IPv6 because it has no broadcast addresses.</td></tr></tbody></table></div></div>
-
 
 ### Edit Network Configuration Files
 
