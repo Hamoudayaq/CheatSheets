@@ -298,4 +298,6 @@ The same as IPv4.</td></tr><tr><td align="left" valign="top">
 
 ## Exploring the filesystem Hierarchy
 
-<code class="code"> https://refspecs.linuxfoundation.org/FHS_3.0/fhs/index.html</code>
+<p>
+> https://refspecs.linuxfoundation.org/FHS_3.0/fhs/index.html
+</p>
