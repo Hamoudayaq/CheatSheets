@@ -294,3 +294,7 @@ The same as IPv4.</td></tr><tr><td align="left" valign="top">
 <code class="code">mac-address=</code>
 </p>
 </td><td align="left" valign="top">The connection is bound to the network interface with this MAC address.</td></tr></tbody></table></div></div>
+
+
+## Exploring the filesystem Hierarchy
+<code class="code"> https://refspecs.linuxfoundation.org/FHS_3.0/fhs/index.html</code>
