@@ -85,7 +85,10 @@ host serverb
      IdentityFile                  ~/.ssh/id_rsa_serverb
 </pre>
 
-## Manage Network
+
+
+
+# ## Manage Network
 
 <div class="table"><a id="idm45741845185552"></a><p class="title"><strong>Common IPv6 Addresses and Networks</strong></p><div class="table-contents"><table border="1" class="table" summary="Common IPv6 Addresses and Networks"><colgroup><col class="c1"><col class="c2"><col class="c3"></colgroup><thead><tr><th align="left" valign="top">IPv6 address or network</th><th align="left" valign="top">Purpose</th><th align="left" valign="top">Description</th></tr></thead><tbody><tr><td align="left" valign="top">
 <code class="code">::1/128</code>
