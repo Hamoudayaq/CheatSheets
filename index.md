@@ -301,3 +301,47 @@ The same as IPv4.</td></tr><tr><td align="left" valign="top">
 <p>Configure the <code class="code">/home/dbadmin1/grading/review2</code> directory to allow members of the <code class="code">database</code> group to create contents in it. All other users should have read and execute permissions on the directory.</p><p>Apply the SetGID special permission on the <code class="code">/home/dbadmin1/grading/review2</code> directory so that the <code class="code">database</code> group owns files that are created in the directory.</p><pre class="screen">[dbadmin1@serverb ~]$ <strong class="userinput"><code>chmod g+s /home/dbadmin1/grading/review2</code></strong></pre><p>Apply the <code class="code">775</code> permission mode on the <code class="code">/home/dbadmin1/grading/review2</code> directory.</p><pre class="screen">[dbadmin1@serverb ~]$ <strong class="userinput"><code>chmod 775 /home/dbadmin1/grading/review2</code></strong></pre>
 
 <p>Apply the sticky bit special permission on the <code class="code">/home/dbadmin1/grading/review2</code> directory.</p><pre class="screen">[dbadmin1@serverb ~]$ <strong class="userinput"><code>chmod o+t /home/dbadmin1/grading/review2</code></strong></pre>
+
+
+<h1>SSHD Configuration Notes</h1>
+
+<div class="section">
+  <h2>Disable Root Login</h2>
+  <ol>
+    <li>
+      On <code>serverb</code>, configure the <code>sshd</code> service to prevent the <code>root</code> user from logging in:
+      <ol class="substeps">
+        <li>Open the <code>/etc/ssh/sshd_config</code> file with:
+          <pre><code>sudo vim /etc/ssh/sshd_config</code></pre>
+        </li>
+        <li>Set the following parameter:
+          <pre><code>PermitRootLogin no</code></pre>
+        </li>
+        <li>Reload the <code>sshd</code> service to apply changes:
+          <pre><code>sudo systemctl reload sshd.service</code></pre>
+        </li>
+      </ol>
+    </li>
+  </ol>
+</div>
+
+<div class="section">
+  <h2>Disable Password Authentication</h2>
+  <ol>
+    <li>
+      On <code>serverb</code>, configure the <code>sshd</code> service to prevent password-based logins:
+      <ol class="substeps">
+        <li>Open the <code>/etc/ssh/sshd_config</code> file:
+          <pre><code>sudo vim /etc/ssh/sshd_config</code></pre>
+        </li>
+        <li>Set the following parameter:
+          <pre><code>PasswordAuthentication no</code></pre>
+        </li>
+        <li>Reload the <code>sshd</code> service to apply changes:
+          <pre><code>sudo systemctl reload sshd.service</code></pre>
+        </li>
+      </ol>
+      Users will now be required to use SSH keys for login.
+    </li>
+  </ol>
+</div>
