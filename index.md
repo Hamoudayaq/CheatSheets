@@ -88,7 +88,7 @@ host serverb
 
 
 
-# ## Manage Network
+## Manage Network
 
 <div class="table"><a id="idm45741845185552"></a><p class="title"><strong>Common IPv6 Addresses and Networks</strong></p><div class="table-contents"><table border="1" class="table" summary="Common IPv6 Addresses and Networks"><colgroup><col class="c1"><col class="c2"><col class="c3"></colgroup><thead><tr><th align="left" valign="top">IPv6 address or network</th><th align="left" valign="top">Purpose</th><th align="left" valign="top">Description</th></tr></thead><tbody><tr><td align="left" valign="top">
 <code class="code">::1/128</code>
@@ -295,3 +295,9 @@ The same as IPv4.</td></tr><tr><td align="left" valign="top">
 <p>
 > https://refspecs.linuxfoundation.org/FHS_3.0/fhs/index.html
 </p>
+
+## Lab and special permissions
+
+<li class="step"><p>Configure the <code class="code">/home/dbadmin1/grading/review2</code> directory to allow members of the <code class="code">database</code> group to create contents in it. All other users should have read and execute permissions on the directory.</p><ol class="substeps" type="1"><li class="step"><p>Apply the SetGID special permission on the <code class="code">/home/dbadmin1/grading/review2</code> directory so that the <code class="code">database</code> group owns files that are created in the directory.</p><pre class="screen">[dbadmin1@serverb ~]$ <strong class="userinput"><code>chmod g+s /home/dbadmin1/grading/review2</code></strong></pre></li><li class="step"><p>Apply the <code class="code">775</code> permission mode on the <code class="code">/home/dbadmin1/grading/review2</code> directory.</p><pre class="screen">[dbadmin1@serverb ~]$ <strong class="userinput"><code>chmod 775 /home/dbadmin1/grading/review2</code></strong></pre></li></ol></li>
+
+<li class="step"><p>Apply the sticky bit special permission on the <code class="code">/home/dbadmin1/grading/review2</code> directory.</p><pre class="screen">[dbadmin1@serverb ~]$ <strong class="userinput"><code>chmod o+t /home/dbadmin1/grading/review2</code></strong></pre></li>
