@@ -345,3 +345,33 @@ The same as IPv4.</td></tr><tr><td align="left" valign="top">
     </li>
   </ol>
 </div>
+
+
+<div class="table"><a id="idm45741848109936"></a><p class="title"><strong>Linux Process States</strong></p><div class="table-contents"><table border="1" class="table" summary="Linux Process States"><colgroup><col class="c1"><col class="c2"><col class="c3"></colgroup><thead><tr><th align="left" valign="top">Name</th><th align="left" valign="top">Flag</th><th align="left" valign="top">Kernel-defined state name and description</th></tr></thead><tbody><tr><td align="left" valign="top">Running</td><td align="left" valign="top">
+<code class="code">R</code>
+</td><td align="left" valign="top">TASK_RUNNING: The process is either executing on a CPU or waiting to run.
+The process can be executing user routines or kernel routines (system calls), or be queued and ready when in the <span class="emphasis"><em>Running</em></span> (or <span class="emphasis"><em>Runnable</em></span>) state.</td></tr><tr><td align="left" rowspan="4" valign="top">Sleeping</td><td align="left" valign="top">
+<code class="code">S</code>
+</td><td align="left" valign="top">TASK_INTERRUPTIBLE: The process is waiting for some condition: a hardware request, system resource access, or a signal.
+When an event or signal satisfies the condition, the process returns to <span class="emphasis"><em>Running</em></span>.</td></tr><tr><td align="left" valign="top">
+<code class="code">D</code>
+</td><td align="left" valign="top">TASK_UNINTERRUPTIBLE: This process is also sleeping, but unlike the <code class="code">S</code> state, does not respond to signals.
+It is used only when process interruption might cause an unpredictable device state.</td></tr><tr><td align="left" valign="top">
+<code class="code">K</code>
+</td><td align="left" valign="top">TASK_KILLABLE: Same as the uninterruptible <code class="code">D</code> state, but modified to allow a waiting task to respond to the signal to kill it (exit completely).
+Utilities often display <span class="emphasis"><em>Killable</em></span> processes as the <code class="code">D</code> state.</td></tr><tr><td align="left" valign="top">
+<code class="code">I</code>
+</td><td align="left" valign="top">TASK_REPORT_IDLE: A subset of state <code class="code">D</code>.
+The kernel does not count these processes when calculating the load average.
+It is used for kernel threads.
+The TASK_UNINTERRUPTIBLE and TASK_NOLOAD flags are set.
+It is similar to TASK_KILLABLE, and is also a subset of state <code class="code">D</code>.
+It accepts fatal signals.</td></tr><tr><td align="left" rowspan="2" valign="top">Stopped</td><td align="left" valign="top">
+<code class="code">T</code>
+</td><td align="left" valign="top">TASK_STOPPED: The process is stopped (suspended), usually by being signaled by a user or another process. The process can be continued (resumed) by another signal to return to running.</td></tr><tr><td align="left" valign="top">
+<code class="code">T</code>
+</td><td align="left" valign="top">TASK_TRACED: A process that is being debugged is also temporarily stopped and shares the <code class="code">T</code> state flag.</td></tr><tr><td align="left" rowspan="2" valign="top">Zombie</td><td align="left" valign="top">
+<code class="code">Z</code>
+</td><td align="left" valign="top">EXIT_ZOMBIE: A child process signals to its parent as it exits. All resources except for the process identity (PID) are released.</td></tr><tr><td align="left" valign="top">
+<code class="code">X</code>
+</td><td align="left" valign="top">EXIT_DEAD: When the parent cleans up (reaps) the remaining child process structure, the process is now released completely. This state cannot be observed in process-listing utilities.</td></tr></tbody></table></div></div>
