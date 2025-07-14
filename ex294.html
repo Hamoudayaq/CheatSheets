@@ -1,17 +1,67 @@
-<pre class="screen">---
-ansible-navigator:
-  execution-environment: <a id="_managing_settings_for_automation_content_navigator-CO2-1"></a><span><img alt="1" border="0" src="/rol/static/roc/Common_Content/images/1.svg" class="image-previewer__preview "></span>
-    image: utility.lab.example.com/ee-supported-rhel8:latest <a id="_managing_settings_for_automation_content_navigator-CO2-2"></a><span><img alt="2" border="0" src="/rol/static/roc/Common_Content/images/2.svg" class="image-previewer__preview "></span>
-    pull:
-      policy: missing <a id="_managing_settings_for_automation_content_navigator-CO2-3"></a><span><img alt="3" border="0" src="/rol/static/roc/Common_Content/images/3.svg" class="image-previewer__preview "></span>
-  playbook-artifact: <a id="_managing_settings_for_automation_content_navigator-CO2-4"></a><span><img alt="4" border="0" src="/rol/static/roc/Common_Content/images/4.svg" class="image-previewer__preview "></span>
-    enable: false <a id="_managing_settings_for_automation_content_navigator-CO2-5"></a><span><img alt="5" border="0" src="/rol/static/roc/Common_Content/images/5.svg" class="image-previewer__preview "></span>
-  mode: stdout <a id="_managing_settings_for_automation_content_navigator-CO2-6"></a><span><img alt="6" border="0" src="/rol/static/roc/Common_Content/images/6.svg" class="image-previewer__preview "></span></pre>
+[RHCSA](./).
+[back](./another-page.html).
 
-  <div class="calloutlist"><table border="0" summary="Callout list"><tbody><tr><td align="left" valign="top" width="5%"><p><a href="#_managing_settings_for_automation_content_navigator-CO2-1"><span><img alt="1" border="0" src="/rol/static/roc/Common_Content/images/1.svg" class="image-previewer__preview "></span></a> </p></td><td align="left" valign="top"><p>The <code class="code">execution-environment</code> section configures settings for the automation execution environment that the <code class="code">ansible-navigator</code> command uses.</p></td></tr><tr><td align="left" valign="top" width="5%"><p><a href="#_managing_settings_for_automation_content_navigator-CO2-2"><span><img alt="2" border="0" src="/rol/static/roc/Common_Content/images/2.svg" class="image-previewer__preview "></span></a> </p></td><td align="left" valign="top"><p>The <code class="code">image</code> key defines the container image name to use for the automation execution environment.</p></td></tr><tr><td align="left" valign="top" width="5%"><p><a href="#_managing_settings_for_automation_content_navigator-CO2-3"><span><img alt="3" border="0" src="/rol/static/roc/Common_Content/images/3.svg" class="image-previewer__preview "></span></a> </p></td><td align="left" valign="top"><p>The <code class="code">policy</code> key nested below the <code class="code">pull</code> section states to only pull the container image if it does not already exist on the local machine.</p></td></tr><tr><td align="left" valign="top" width="5%"><p><a href="#_managing_settings_for_automation_content_navigator-CO2-4"><span><img alt="4" border="0" src="/rol/static/roc/Common_Content/images/4.svg" class="image-previewer__preview "></span></a> </p></td><td align="left" valign="top"><p>The <code class="code">playbook-artifact</code> section configures settings for the JSON files that Ansible generates every time you run a playbook.
-Each generated JSON file records information about a specific playbook run.
-You can use these files to review the results of a playbook run or to troubleshoot playbook issues.</p></td></tr><tr><td align="left" valign="top" width="5%"><p><a href="#_managing_settings_for_automation_content_navigator-CO2-5"><span><img alt="5" border="0" src="/rol/static/roc/Common_Content/images/5.svg" class="image-previewer__preview "></span></a> </p></td><td align="left" valign="top"><p>The <code class="code">enable</code> key nested below the <code class="code">playbook-artifact</code> section disables generating playbook artifacts when using the <code class="code">ansible-navigator run</code> command.
-Playbook artifacts must be disabled when you require a prompt for a password when running a playbook.
-You can temporarily override this setting from the command line with the <code class="code">--pae</code> option.</p></td></tr><tr><td align="left" valign="top" width="5%"><p><a href="#_managing_settings_for_automation_content_navigator-CO2-6"><span><img alt="6" border="0" src="/rol/static/roc/Common_Content/images/6.svg" class="image-previewer__preview "></span></a> </p></td><td align="left" valign="top"><p>The <code class="code">mode</code> key defines the output mode for the <code class="code">ansible-navigator</code> command.
-The value for this key should be set to either <code class="code">interactive</code> (the default) or <code class="code">stdout</code>.
-You can temporarily override this setting from the command line with the <code class="code">-m</code> option.</p></td></tr></tbody></table></div>
+<h2><code>ansible-navigator</code> Configuration</h2>
+
+<p>This YAML snippet configures the behavior of <code>ansible-navigator</code> for automation workflows using execution environments.</p>
+
+<h3>Example Configuration</h3>
+
+<pre><code class="language-yaml">---
+ansible-navigator:
+  execution-environment:
+    image: utility.lab.example.com/ee-supported-rhel8:latest
+    pull:
+      policy: missing
+  playbook-artifact:
+    enable: false
+  mode: stdout
+</code></pre>
+
+<hr />
+
+<h3>🔧 Configuration Breakdown</h3>
+
+<h4><code>execution-environment</code></h4>
+<p>Defines settings for the container-based execution environment that <code>ansible-navigator</code> uses.</p>
+
+<ul>
+  <li><strong><code>image:</code></strong><br />
+    Specifies the container image to use.<br />
+    Example: <code>utility.lab.example.com/ee-supported-rhel8:latest</code>
+  </li>
+  <li><strong><code>pull.policy:</code></strong><br />
+    Determines when to pull the image:
+    <ul>
+      <li><code>missing</code>: Only pull if the image does not already exist locally.</li>
+    </ul>
+  </li>
+</ul>
+
+<h4><code>playbook-artifact</code></h4>
+<p>Manages JSON artifact generation for playbook runs.</p>
+
+<ul>
+  <li><strong><code>enable: false</code></strong><br />
+    Disables playbook artifact generation. This is useful when playbooks require interactive input (e.g., prompting for passwords).<br />
+    <em>✅ You can override this setting with the <code>--pae</code> command-line option.</em>
+  </li>
+</ul>
+
+<h4><code>mode</code></h4>
+<p>Specifies how output is displayed when running <code>ansible-navigator</code>.</p>
+
+<ul>
+  <li>Options:
+    <ul>
+      <li><code>interactive</code>: Launches a TUI (Text User Interface)</li>
+      <li><code>stdout</code>: Outputs results to the terminal (suitable for scripting)</li>
+    </ul>
+  </li>
+  <li><em>🔁 Use <code>-m stdout</code> or <code>-m interactive</code> to override temporarily.</em></li>
+</ul>
+
+<hr />
+
+<h3>✅ Best Practice Tip</h3>
+<p>Use <code>mode: stdout</code> for CI/CD pipelines or automation scripts, and <code>interactive</code> for debugging or manual playbook runs.</p>
