@@ -17,14 +17,31 @@
     .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
     .pill{background:#eef2ff;color:#3730a3;padding:6px 10px;border-radius:999px;font-weight:600}
     footer{margin-top:18px;font-size:0.9rem;color:#475569}
+    .btn {
+      display: inline-block;
+      margin: 8px 0;
+      padding: 10px 18px;
+      background-color: #007bff;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+    .btn:hover {
+      background-color: #0056b3;
+    }
   </style>
 </head>
 ---
 layout: default
 ---
-[RHCSA](./).
-[back](./another-page.html).
-[Helm](./helm.md)
+  <a href="./" class="btn">RHCSA</a><br>
+  <a href="./another-page.html" class="btn">Back</a><br>
+  <a href="./helm.md" class="btn">Helm</a><br>
+[RHCSA](./) <br>
+[back](./another-page.html) <br>
+[Helm](./helm.md) <br>
 
 <h2>Openshift Cheat-sheet</h2>
 

@@ -1,9 +1,9 @@
 ---
 layout: default
 ---
-[RHCSA](./).
-[back](./another-page.html).
-[Openshift](./Openshift.md)
+[RHCSA](./) <br>
+[back](./another-page.html) <br>
+[Openshift](./Openshift.md) <br>
 
 <head>
   <meta charset="UTF-8">
