@@ -1,3 +1,24 @@
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>OpenShift Templates — Study Sheet</title>
+  <style>
+    body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;line-height:1.5;color:#0f172a;background:#f8fafc;padding:24px}
+    .container{max-width:900px;margin:0 auto;background:#fff;padding:28px;border-radius:12px;box-shadow:0 6px 20px rgba(2,6,23,0.08)}
+    h1{font-size:1.6rem;margin-bottom:6px}
+    h2{font-size:1.1rem;margin-top:18px}
+    p{margin:8px 0}
+    .badge{display:inline-block;background:#eef2ff;color:#3730a3;padding:6px 10px;border-radius:999px;font-weight:600;font-size:0.85rem}
+    pre{background:#0b1220;color:#e6eef8;padding:12px;border-radius:8px;overflow:auto}
+    code{font-family:SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace}
+    ul{margin:8px 0 8px 20px}
+    .key{background:#fffbeb;border-left:4px solid #f59e0b;padding:10px;border-radius:6px}
+    .tip{background:#ecfeff;border-left:4px solid #06b6d4;padding:10px;border-radius:6px}
+    .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    .pill{background:#eef2ff;color:#3730a3;padding:6px 10px;border-radius:999px;font-weight:600}
+    footer{margin-top:18px;font-size:0.9rem;color:#475569}
+  </style>
+</head>
 ---
 layout: default
 ---
@@ -52,3 +73,106 @@ Welcome to Red Hat Training, from satir-app-787b7d7858-q7bhj
 Welcome to Red Hat Training, from satir-app-787b7d7858-q7bhj
 Welcome to Red Hat Training, from satir-app-787b7d7858-q7bhj
 <span class="emphasis"><em>...output omitted...</em></span></pre></li>
+
+
+
+
+  <div class="container">
+    <header>
+      <h1>Chapter 2 — OpenShift Templates (Study Sheet)</h1>
+      <p class="badge">Objective: Deploy/update apps from OpenShift templates</p>
+    </header>
+
+    <section>
+      <h2>What is a Template?</h2>
+      <p>A <strong>Template</strong> is an OpenShift custom resource that defines a set of related Kubernetes resources and parameters. Templates let you produce multiple resources from a single parameterized definition for quick and repeatable deployments.</p>
+      <div class="key">
+        <strong>Use cases:</strong> quick app deployment, parameterized configs for environments, shareable/reusable deployment definitions.
+      </div>
+    </section>
+
+    <section>
+      <h2>Discovering Templates</h2>
+      <ul>
+        <li>List templates in the <code>openshift</code> namespace:
+          <pre><code>oc get templates -n openshift</code></pre>
+        </li>
+        <li>Show details of a template:
+          <pre><code>oc describe template &lt;name&gt; -n openshift</code></pre>
+        </li>
+        <li>Show only parameters:
+          <pre><code>oc process --parameters &lt;template&gt; -n openshift</code></pre>
+        </li>
+        <li>Export full template YAML:
+          <pre><code>oc get template &lt;name&gt; -o yaml -n openshift</code></pre>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Using Templates</h2>
+      <p>Templates can be used interactively or to generate manifests for automated workflows.</p>
+      <ul>
+        <li><strong>Quick create (one-shot):</strong>
+          <pre><code>oc new-app --template=cache-service -p APPLICATION_USER=my-user</code></pre>
+          <small>Creates new resources only — convenient for development.</small>
+        </li>
+        <li><strong>Generate manifest with parameters:</strong>
+          <pre><code>oc process my-template -p KEY=VALUE -o yaml &gt; manifest.yaml</code></pre>
+        </li>
+        <li><strong>Apply directly (no file):</strong>
+          <pre><code>oc process my-template --param-file=params.env | oc apply -f -</code></pre>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Updating Apps from Templates</h2>
+      <p>Re-process the template with new parameters and pipe to <code>oc apply</code> to update live resources. Good for simple parameter changes.</p>
+      <p><strong>Preview changes before applying:</strong></p>
+      <pre><code>oc process my-template --param-file=params2.env | oc diff -f -</code></pre>
+      <div class="tip">Tip: For complex application updates, consider using Helm charts instead of templates.</div>
+    </section>
+
+    <section>
+      <h2>Managing Templates (best practices)</h2>
+      <ol>
+        <li>Copy and customize an existing template to your project:
+          <pre><code>oc get template cache-service -o yaml -n openshift &gt; my-template.yaml</code></pre>
+        </li>
+        <li>Recommended edits to the YAML before uploading:
+          <ul>
+            <li>Give the template a project-specific name</li>
+            <li>Adjust default parameter values</li>
+            <li>Remove <code>metadata.namespace</code> to avoid namespace errors</li>
+          </ul>
+        </li>
+        <li>Upload template to your project or shared project:
+          <pre><code>oc create -f my-template.yaml
+oc create -f my-template.yaml -n shared-templates</code></pre>
+        </li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>Important Commands (quick reference)</h2>
+      <div class="actions">
+        <div class="pill">oc get templates -n openshift</div>
+        <div class="pill">oc describe template &lt;name&gt; -n openshift</div>
+        <div class="pill">oc process --parameters &lt;template&gt;</div>
+        <div class="pill">oc process &lt;template&gt; -p KEY=VALUE -o yaml</div>
+        <div class="pill">oc process --param-file=params.env | oc apply -f -</div>
+        <div class="pill">oc process ... | oc diff -f -</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Student Key Takeaways</h2>
+      <ul>
+        <li>Templates = packaged + parameterized resource sets.</li>
+        <li>Use <code>oc new-app</code> for fast dev deployments; use <code>oc process</code> + <code>oc apply</code> for reproducible, auditable deployments.</li>
+        <li>Parameters can be passed inline (<code>-p</code>) or via a <code>--param-file</code> for cleaner ops and versioning.</li>
+        <li>Always use <code>oc diff</code> to preview template-based changes before applying to production.</li>
+        <li>Copy and customize templates before using them in production.</li>
+      </ul>
+    </section>
