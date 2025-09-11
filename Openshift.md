@@ -79,13 +79,11 @@ Welcome to Red Hat Training, from satir-app-787b7d7858-q7bhj
 
   <div class="container">
     <header>
-      <h1>Chapter 2 — OpenShift Templates (Study Sheet)</h1>
+      <h1>OpenShift Templates </h1>
       <p class="badge">Objective: Deploy/update apps from OpenShift templates</p>
     </header>
 
     <section>
-      <h2>What is a Template?</h2>
-      <p>A <strong>Template</strong> is an OpenShift custom resource that defines a set of related Kubernetes resources and parameters. Templates let you produce multiple resources from a single parameterized definition for quick and repeatable deployments.</p>
       <div class="key">
         <strong>Use cases:</strong> quick app deployment, parameterized configs for environments, shareable/reusable deployment definitions.
       </div>
@@ -166,13 +164,3 @@ oc create -f my-template.yaml -n shared-templates</code></pre>
       </div>
     </section>
 
-    <section>
-      <h2>Student Key Takeaways</h2>
-      <ul>
-        <li>Templates = packaged + parameterized resource sets.</li>
-        <li>Use <code>oc new-app</code> for fast dev deployments; use <code>oc process</code> + <code>oc apply</code> for reproducible, auditable deployments.</li>
-        <li>Parameters can be passed inline (<code>-p</code>) or via a <code>--param-file</code> for cleaner ops and versioning.</li>
-        <li>Always use <code>oc diff</code> to preview template-based changes before applying to production.</li>
-        <li>Copy and customize templates before using them in production.</li>
-      </ul>
-    </section>
