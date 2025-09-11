@@ -24,6 +24,7 @@ layout: default
 ---
 [RHCSA](./).
 [back](./another-page.html).
+[Helm](./helm.md)
 
 <h2>Openshift Cheat-sheet</h2>
 
