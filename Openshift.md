@@ -181,6 +181,7 @@ Welcome to Red Hat Training, from satir-app-787b7d7858-q7bhj
         <div class="pill">oc process ... | oc diff -f -</div>
       </div>
     </section>
+  </div>
 
 <div class="container">
   <header>
