@@ -38,7 +38,7 @@ layout: default
 ---
   <a href="./" class="btn">RHCSA</a><br>
   <a href="./another-page.html" class="btn">Back</a><br>
-  <a href="./helm.md" class="btn">Helm</a><br>
+  <a href="./helm.html" class="btn">Helm</a><br>
 [RHCSA](./) <br>
 [back](./another-page.html) <br>
 [Helm](./helm.md) <br>
@@ -165,7 +165,7 @@ Welcome to Red Hat Training, from satir-app-787b7d7858-q7bhj
         </li>
         <li>Upload template to your project or shared project:
           <pre><code>oc create -f my-template.yaml
-oc create -f my-template.yaml -n shared-templates</code></pre>
+              oc create -f my-template.yaml -n shared-templates</code></pre>
         </li>
       </ol>
     </section>
@@ -182,3 +182,47 @@ oc create -f my-template.yaml -n shared-templates</code></pre>
       </div>
     </section>
 
+<div class="container">
+  <header>
+    <h1>Generate and Test a CA-Signed Certificate</h1>
+    <p class="badge">Objective: Create a private key, CSR, and CA-signed cert for OpenShift apps</p>
+  </header>
+
+  <section>
+    <h2>Step 1: Generate Private Key</h2>
+    <pre><code>[student@workstation certs]$ openssl genrsa -out training.key 4096</code></pre>
+  </section>
+
+  <section>
+    <h2>Step 2: Generate CSR</h2>
+    <p>For the hostname <code>todo-https.apps.ocp4.example.com</code>:</p>
+    <pre><code>[student@workstation certs]$ openssl req -new \
+    -key training.key -out training.csr \
+    -subj "/C=US/ST=North Carolina/L=Raleigh/O=Red Hat/\
+    CN=todo-https.apps.ocp4.example.com"</code></pre>
+  </section>
+
+  <section>
+    <h2>Step 3: Sign the Certificate</h2>
+    <p>Use your CA key, cert, and password. Add SANs with an <code>extfile</code>.</p>
+    <pre><code>[student@workstation certs]$ openssl x509 -req -in training.csr \
+    -passin file:passphrase.txt \
+    -CA training-CA.pem -CAkey training-CA.key -CAcreateserial \
+    -out training.crt -days 1825 -sha256 -extfile training.ext</code></pre>
+    <div class="tip">Tip: The <code>-extfile</code> allows you to add Subject Alternative Names (SANs).</div>
+  </section>
+
+  <section>
+    <h2>Step 4: Test the Certificate</h2>
+    <ul>
+      <li>Verify using the CA certificate:
+        <pre><code>curl -vv -I \
+    --cacert certs/training-CA.pem \
+    https://todo-https.apps.ocp4.example.com</code></pre>
+      </li>
+      <li>Test directly against pod/service IP with <code>-k</code> (insecure, skip cert validation):
+        <pre><code>curl -s -k https://172.30.121.154:8443 | head -n5</code></pre>
+      </li>
+    </ul>
+  </section>
+</div>
