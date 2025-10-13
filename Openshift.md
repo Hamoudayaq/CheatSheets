@@ -39,9 +39,7 @@ layout: default
   <a href="./" class="btn">RHCSA</a><br>
   <a href="./another-page.html" class="btn">Back</a><br>
   <a href="./helm.html" class="btn">Helm</a><br>
-[RHCSA](./) <br>
-[back](./another-page.html) <br>
-[Helm](./helm.md) <br>
+
 
 <h2>Openshift Cheat-sheet</h2>
 
