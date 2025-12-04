@@ -1,52 +1,62 @@
-<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>RHACM Observability Cheatsheet</title>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        line-height: 1.6;
-        margin: 30px;
-        background: #f9f9f9;
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>OpenShift Templates — Study Sheet</title>
+  <style>
+    body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;line-height:1.5;color:#0f172a;background:#f8fafc;padding:24px}
+    .container{max-width:900px;margin:0 auto;background:#fff;padding:28px;border-radius:12px;box-shadow:0 6px 20px rgba(2,6,23,0.08)}
+    h1{font-size:1.6rem;margin-bottom:6px}
+    h2{font-size:1.1rem;margin-top:18px}
+    p{margin:8px 0}
+    .badge{display:inline-block;background:#eef2ff;color:#3730a3;padding:6px 10px;border-radius:999px;font-weight:600;font-size:0.85rem}
+    pre{background:#0b1220;color:#e6eef8;padding:12px;border-radius:8px;overflow:auto}
+    code{font-family:SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace}
+    ul{margin:8px 0 8px 20px}
+    .key{background:#fffbeb;border-left:4px solid #f59e0b;padding:10px;border-radius:6px}
+    .tip{background:#ecfeff;border-left:4px solid #06b6d4;padding:10px;border-radius:6px}
+    .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    .pill{background:#eef2ff;color:#3730a3;padding:6px 10px;border-radius:999px;font-weight:600}
+    footer{margin-top:18px;font-size:0.9rem;color:#475569}
+    .btn {
+      display: inline-block;
+      margin: 8px 0;
+      padding: 10px 18px;
+      background-color: #007bff;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 16px;
+      transition: background-color 0.3s;
     }
-    h1, h2 {
-        color: #d03232;
+    .btn:hover {
+      background-color: #0056b3;
     }
-    code {
-        background: #eee;
-        padding: 3px 5px;
-        border-radius: 4px;
-    }
-    pre {
-        background: #272822;
-        color: #fafafa;
-        padding: 12px;
-        border-radius: 6px;
-        overflow-x: auto;
-    }
-    .section {
-        margin-bottom: 40px;
-    }
-</style>
+  </style>
 </head>
-<body>
+---
+layout: default
+---
+  <a href="./" class="btn">RHCSA</a><br>
+  <a href="./another-page.html" class="btn">Back</a><br>
+  <a href="./helm.html" class="btn">Helm</a><br>
+
 
 <h1>RHACM Observability — Workflow Cheatsheet</h1>
 
 <div class="section">
 <h2>1. Create Observability Namespace</h2>
-<code>oc login -u admin -p redhatocp https://api.ocp4.example.com:6443</code>
-<code>oc create namespace open-cluster-management-observability</code> 
+ <code class="code">oc login -u admin -p redhatocp https://api.ocp4.example.com:6443</code>
+ <code class="code">oc create namespace open-cluster-management-observability</code> 
 </div>
 
 <div class="section">
 <h2>2. Create Pull Secret</h2>
 <h3>Extract global pull-secret:</h3>
- <code>DOCKER_CONFIG_JSON=$(oc extract secret/pull-secret -n openshift-config --to=-)</code> 
- <code>echo $DOCKER_CONFIG_JSON</code> 
+  <code class="code">DOCKER_CONFIG_JSON=$(oc extract secret/pull-secret -n openshift-config --to=-)</code> 
+  <code class="code">echo $DOCKER_CONFIG_JSON</code> 
 
 <h3>Create secret in the observability namespace:</h3>
- <code>oc create secret generic multiclusterhub-operator-pull-secret \
+  <code class="code">oc create secret generic multiclusterhub-operator-pull-secret \
   -n open-cluster-management-observability \
   --from-literal=.dockerconfigjson="$DOCKER_CONFIG_JSON" \
   --type=kubernetes.io/dockerconfigjson</code> 
@@ -54,7 +64,7 @@
 
 <div class="section">
 <h2>3. Verify ODF Readiness</h2>
- <code>oc get storagecluster -n openshift-storage
+  <code class="code">oc get storagecluster -n openshift-storage
 oc get noobaa -n openshift-storage
 oc get storageclasses -o custom-columns='NAME:metadata.name,PROVISIONER:provisioner'</code> 
 </div>
@@ -63,10 +73,10 @@ oc get storageclasses -o custom-columns='NAME:metadata.name,PROVISIONER:provisio
 <h2>4. Create Object Bucket Claim (OBC)</h2>
 
 <h3>Move to lab directory:</h3>
- <code>cd ~/DO0014L/labs/observability-enable/</code> 
+  <code class="code">cd ~/DO0014L/labs/observability-enable/</code> 
 
 <h3>Example <em>obc.yaml</em>:</h3>
- <code>apiVersion: objectbucket.io/v1alpha1
+  <code class="code">apiVersion: objectbucket.io/v1alpha1
 kind: ObjectBucketClaim
 metadata:
   name: thanos-obc
@@ -76,7 +86,7 @@ spec:
   generateBucketName: observability-bucket</code> 
 
 <h3>Apply manifest:</h3>
- <code>oc apply -f obc.yaml
+  <code class="code">oc apply -f obc.yaml
 oc get objectbucketclaim -n open-cluster-management-observability</code> 
 </div>
 
@@ -84,19 +94,19 @@ oc get objectbucketclaim -n open-cluster-management-observability</code>
 <h2>5. Retrieve S3 Bucket Info</h2>
 
 <h3>From ConfigMap:</h3>
- <code>oc extract --to=- cm/thanos-obc -n open-cluster-management-observability</code> 
+  <code class="code">oc extract --to=- cm/thanos-obc -n open-cluster-management-observability</code> 
 
 <h3>From Secret:</h3>
- <code>oc extract --to=- secret/thanos-obc -n open-cluster-management-observability</code> 
+  <code class="code">oc extract --to=- secret/thanos-obc -n open-cluster-management-observability</code> 
 
 <h3>Get S3 public route:</h3>
- <code>oc get route s3 -n openshift-storage</code> 
+  <code class="code">oc get route s3 -n openshift-storage</code> 
 </div>
 
 <div class="section">
 <h2>6. Create Thanos Storage Secret</h2>
 
- <code>apiVersion: v1
+  <code class="code">apiVersion: v1
 kind: Secret
 metadata:
   name: thanos-object-storage
@@ -113,14 +123,14 @@ stringData:
       secret_key: &lt;YOUR_SECRET_KEY&gt;
 </code> 
 
- <code>oc apply -f secret.yaml</code> 
+  <code class="code">oc apply -f secret.yaml</code> 
 </div>
 
 <div class="section">
 <h2>7. Deploy the MultiClusterObservability Resource</h2>
 
 <h3>Example <em>mcobs.yaml</em>:</h3>
- <code>apiVersion: observability.open-cluster-management.io/v1beta2
+  <code class="code">apiVersion: observability.open-cluster-management.io/v1beta2
 kind: MultiClusterObservability
 metadata:
   name: observability
@@ -140,24 +150,23 @@ spec:
 </code> 
 
 <h3>Apply:</h3>
- <code>oc apply -f mcobs.yaml</code> 
+  <code class="code">oc apply -f mcobs.yaml</code> 
 
 <h3>Verify operator:</h3>
- <code>oc get deploy multicluster-observability-operator -n open-cluster-management</code> 
+  <code class="code">oc get deploy multicluster-observability-operator -n open-cluster-management</code> 
 
 <h3>Verify observability pods:</h3>
- <code>oc get pods -n open-cluster-management-observability</code> 
+  <code class="code">oc get pods -n open-cluster-management-observability</code> 
 </div>
 
 <div class="section">
 <h2>8. Access Grafana Dashboards</h2>
 <p>
 1. Go to: <strong>OpenShift Console</strong><br>
-2. Login as <code>admin / redhatocp</code><br>
+2. Login as  <code class="code">admin / redhatocp</code><br>
 3. Switch to <strong>RHACM Console</strong><br>
 4. Navigate to <strong>Infrastructure → Clusters</strong><br>
 5. Click <strong>Grafana</strong> (top right)
 </p>
 </div>
 
-</body>
