@@ -35,15 +35,15 @@
 
 <div class="section">
 <h2>1. Create Observability Namespace</h2>
- <code>oc login -u admin -p redhatocp https://api.ocp4.example.com:6443
-oc create namespace open-cluster-management-observability</code> 
+<code>oc login -u admin -p redhatocp https://api.ocp4.example.com:6443</code>
+<code>oc create namespace open-cluster-management-observability</code> 
 </div>
 
 <div class="section">
 <h2>2. Create Pull Secret</h2>
 <h3>Extract global pull-secret:</h3>
- <code>DOCKER_CONFIG_JSON=$(oc extract secret/pull-secret -n openshift-config --to=-)
-echo $DOCKER_CONFIG_JSON</code> 
+ <code>DOCKER_CONFIG_JSON=$(oc extract secret/pull-secret -n openshift-config --to=-)</code> 
+ <code>echo $DOCKER_CONFIG_JSON</code> 
 
 <h3>Create secret in the observability namespace:</h3>
  <code>oc create secret generic multiclusterhub-operator-pull-secret \
