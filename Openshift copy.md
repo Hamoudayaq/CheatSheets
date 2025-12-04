@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -36,68 +35,68 @@
 
 <div class="section">
 <h2>1. Create Observability Namespace</h2>
-<pre><code>oc login -u admin -p redhatocp https://api.ocp4.example.com:6443
-oc create namespace open-cluster-management-observability</code></pre>
+ <code>oc login -u admin -p redhatocp https://api.ocp4.example.com:6443
+oc create namespace open-cluster-management-observability</code> 
 </div>
 
 <div class="section">
 <h2>2. Create Pull Secret</h2>
 <h3>Extract global pull-secret:</h3>
-<pre><code>DOCKER_CONFIG_JSON=$(oc extract secret/pull-secret -n openshift-config --to=-)
-echo $DOCKER_CONFIG_JSON</code></pre>
+ <code>DOCKER_CONFIG_JSON=$(oc extract secret/pull-secret -n openshift-config --to=-)
+echo $DOCKER_CONFIG_JSON</code> 
 
 <h3>Create secret in the observability namespace:</h3>
-<pre><code>oc create secret generic multiclusterhub-operator-pull-secret \
+ <code>oc create secret generic multiclusterhub-operator-pull-secret \
   -n open-cluster-management-observability \
   --from-literal=.dockerconfigjson="$DOCKER_CONFIG_JSON" \
-  --type=kubernetes.io/dockerconfigjson</code></pre>
+  --type=kubernetes.io/dockerconfigjson</code> 
 </div>
 
 <div class="section">
 <h2>3. Verify ODF Readiness</h2>
-<pre><code>oc get storagecluster -n openshift-storage
+ <code>oc get storagecluster -n openshift-storage
 oc get noobaa -n openshift-storage
-oc get storageclasses -o custom-columns='NAME:metadata.name,PROVISIONER:provisioner'</code></pre>
+oc get storageclasses -o custom-columns='NAME:metadata.name,PROVISIONER:provisioner'</code> 
 </div>
 
 <div class="section">
 <h2>4. Create Object Bucket Claim (OBC)</h2>
 
 <h3>Move to lab directory:</h3>
-<pre><code>cd ~/DO0014L/labs/observability-enable/</code></pre>
+ <code>cd ~/DO0014L/labs/observability-enable/</code> 
 
 <h3>Example <em>obc.yaml</em>:</h3>
-<pre><code>apiVersion: objectbucket.io/v1alpha1
+ <code>apiVersion: objectbucket.io/v1alpha1
 kind: ObjectBucketClaim
 metadata:
   name: thanos-obc
   namespace: open-cluster-management-observability
 spec:
   storageClassName: openshift-storage.noobaa.io
-  generateBucketName: observability-bucket</code></pre>
+  generateBucketName: observability-bucket</code> 
 
 <h3>Apply manifest:</h3>
-<pre><code>oc apply -f obc.yaml
-oc get objectbucketclaim -n open-cluster-management-observability</code></pre>
+ <code>oc apply -f obc.yaml
+oc get objectbucketclaim -n open-cluster-management-observability</code> 
 </div>
 
 <div class="section">
 <h2>5. Retrieve S3 Bucket Info</h2>
 
 <h3>From ConfigMap:</h3>
-<pre><code>oc extract --to=- cm/thanos-obc -n open-cluster-management-observability</code></pre>
+ <code>oc extract --to=- cm/thanos-obc -n open-cluster-management-observability</code> 
 
 <h3>From Secret:</h3>
-<pre><code>oc extract --to=- secret/thanos-obc -n open-cluster-management-observability</code></pre>
+ <code>oc extract --to=- secret/thanos-obc -n open-cluster-management-observability</code> 
 
 <h3>Get S3 public route:</h3>
-<pre><code>oc get route s3 -n openshift-storage</code></pre>
+ <code>oc get route s3 -n openshift-storage</code> 
 </div>
 
 <div class="section">
 <h2>6. Create Thanos Storage Secret</h2>
 
-<pre><code>apiVersion: v1
+ <code>apiVersion: v1
 kind: Secret
 metadata:
   name: thanos-object-storage
@@ -112,16 +111,16 @@ stringData:
       insecure: true
       access_key: &lt;YOUR_ACCESS_KEY&gt;
       secret_key: &lt;YOUR_SECRET_KEY&gt;
-</code></pre>
+</code> 
 
-<pre><code>oc apply -f secret.yaml</code></pre>
+ <code>oc apply -f secret.yaml</code> 
 </div>
 
 <div class="section">
 <h2>7. Deploy the MultiClusterObservability Resource</h2>
 
 <h3>Example <em>mcobs.yaml</em>:</h3>
-<pre><code>apiVersion: observability.open-cluster-management.io/v1beta2
+ <code>apiVersion: observability.open-cluster-management.io/v1beta2
 kind: MultiClusterObservability
 metadata:
   name: observability
@@ -138,16 +137,16 @@ spec:
     receiveStorageSize: 1Gi
     ruleStorageSize: 1Gi
     storeStorageSize: 1Gi
-</code></pre>
+</code> 
 
 <h3>Apply:</h3>
-<pre><code>oc apply -f mcobs.yaml</code></pre>
+ <code>oc apply -f mcobs.yaml</code> 
 
 <h3>Verify operator:</h3>
-<pre><code>oc get deploy multicluster-observability-operator -n open-cluster-management</code></pre>
+ <code>oc get deploy multicluster-observability-operator -n open-cluster-management</code> 
 
 <h3>Verify observability pods:</h3>
-<pre><code>oc get pods -n open-cluster-management-observability</code></pre>
+ <code>oc get pods -n open-cluster-management-observability</code> 
 </div>
 
 <div class="section">
@@ -162,4 +161,3 @@ spec:
 </div>
 
 </body>
-</html>
