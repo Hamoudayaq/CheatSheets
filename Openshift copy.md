@@ -43,6 +43,25 @@ layout: default
 
 <h1>RHACM Observability – Complete Cheatsheet</h1>
 
+<!-- RHACM Observability Rules -->
+<section id="rhacm-observability-rules">
+  <h2>RHACM Observability: Prometheus, Thanos, Default & Custom Rules</h2>
+  <p>
+    In RHACM observability, Prometheus and Thanos use the same PromQL rule language, but Thanos evaluates rules centrally with a global, multi-cluster view, while each cluster Prometheus instance only sees its own cluster. There are default rules, shipped by Red Hat in a Thanos Ruler default rules ConfigMap, which give you ready-made alerts, and custom rules, which you add in a Thanos Ruler custom rules ConfigMap to define your own fleet-wide alerts or recordings. 
+  </p>
+
+  <h3>Super Simple Mental Model</h3>
+  <ul>
+    <li><strong>Local Prometheus rules</strong>: Per-cluster only; good for local alerts and SLOs.</li>
+    <li><strong>Thanos/RHACM rules</strong>: Same PromQL syntax, but run on Thanos with metrics from all clusters; good for global/fleet alerts and long-term data.</li>
+    <li><strong>Default rules</strong>: Pre-made Thanos rules in the default rules ConfigMap; you get useful alerts without writing anything.</li>
+    <li><strong>Custom rules</strong>: Your own Thanos rules in the custom rules ConfigMap when you want extra or different alerts/recordings.</li>
+  </ul>
+</section>
+
+<!-- Configure RHACM Observability-->
+
+
 <div class="section">
 <h2>1. Create Observability Namespace</h2>
 <pre><code>oc login -u admin -p redhatocp https://api.ocp4.example.com:6443
