@@ -1,47 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>RHACM Observability Cheatsheet</title>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background: #ffffff;
-        margin: 40px auto;
-        max-width: 900px;
-        line-height: 1.6;
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>OpenShift Templates — Study Sheet</title>
+  <style>
+    body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;line-height:1.5;color:#0f172a;background:#f8fafc;padding:24px}
+    .container{max-width:900px;margin:0 auto;background:#fff;padding:28px;border-radius:12px;box-shadow:0 6px 20px rgba(2,6,23,0.08)}
+    h1{font-size:1.6rem;margin-bottom:6px}
+    h2{font-size:1.1rem;margin-top:18px}
+    p{margin:8px 0}
+    .badge{display:inline-block;background:#eef2ff;color:#3730a3;padding:6px 10px;border-radius:999px;font-weight:600;font-size:0.85rem}
+    pre{background:#0b1220;color:#e6eef8;padding:12px;border-radius:8px;overflow:auto}
+    code{font-family:SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace}
+    ul{margin:8px 0 8px 20px}
+    .key{background:#fffbeb;border-left:4px solid #f59e0b;padding:10px;border-radius:6px}
+    .tip{background:#ecfeff;border-left:4px solid #06b6d4;padding:10px;border-radius:6px}
+    .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    .pill{background:#eef2ff;color:#3730a3;padding:6px 10px;border-radius:999px;font-weight:600}
+    footer{margin-top:18px;font-size:0.9rem;color:#475569}
+    .btn {
+      display: inline-block;
+      margin: 8px 0;
+      padding: 10px 18px;
+      background-color: #007bff;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 16px;
+      transition: background-color 0.3s;
     }
-    h1 {
-        text-align: center;
-        color: #009879;
-        margin-bottom: 40px;
+    .btn:hover {
+      background-color: #0056b3;
     }
-    h2 {
-        color: #009879;
-        margin-top: 40px;
-    }
-    pre {
-        background: #f4f4f4;
-        padding: 12px;
-        border-radius: 5px;
-        overflow-x: auto;
-        border-left: 4px solid #009879;
-    }
-    code {
-        font-family: monospace;
-    }
-    .section {
-        margin-bottom: 40px;
-    }
-    hr {
-        border: none;
-        height: 1px;
-        background: #ddd;
-        margin: 40px 0;
-    }
-</style>
+  </style>
 </head>
-<body>
+---
+layout: default
+---
+  <a href="./" class="btn">RHCSA</a><br>
+  <a href="./another-page.html" class="btn">Back</a><br>
+  <a href="./helm.html" class="btn">Helm</a><br>
+
 
 <h1>RHACM Observability – Complete Cheatsheet</h1>
 
@@ -185,6 +183,3 @@ spec:
 5. Click <b>Grafana</b> (top-right)
 </p>
 </div>
-
-</body>
-</html>
