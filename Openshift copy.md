@@ -54,9 +54,11 @@ oc create namespace open-cluster-management-observability</code></pre>
 <div class="section">
 <h2>2. Create Pull Secret</h2>
 
-<b>Extract the global pull-secret</b>
-<pre><code>DOCKER_CONFIG_JSON=$(oc extract secret/pull-secret -n openshift-config --to=-)
-echo "$DOCKER_CONFIG_JSON"</code></pre>
+<b>Extract the global  pull-secret from openshift-config or open-cluster-management</b>
+<pre><code>DOCKER_CONFIG_JSON=$(oc extract secret/multiclusterhub-observability-pull-secret -n open-cluster-management --to=-)</code></pre>
+<b> Or </b>
+<pre><code>DOCKER_CONFIG_JSON=$(oc extract secret/pull-secret -n openshift-config --to=-)</code></pre>
+<pre><code>echo "$DOCKER_CONFIG_JSON"</code></pre>
 
 <b>Create pull-secret in the observability namespace</b>
 <pre><code>oc create secret generic multiclusterhub-operator-pull-secret \
@@ -79,8 +81,6 @@ oc get storageclasses -o custom-columns='NAME:metadata.name,PROVISIONER:provisio
 <div class="section">
 <h2>4. Create Object Bucket Claim (OBC)</h2>
 
-<b>Move to lab directory</b>
-<pre><code>cd ~/DO0014L/labs/observability-enable/</code></pre>
 
 <b>Example obc.yaml</b>
 <pre><code>apiVersion: objectbucket.io/v1alpha1
@@ -141,7 +141,7 @@ stringData:
 <div class="section">
 <h2>7. Deploy MultiClusterObservability Resource</h2>
 
-<b>mcobs.yaml example</b>
+<b>Example</b>
 <pre><code>apiVersion: observability.open-cluster-management.io/v1beta2
 kind: MultiClusterObservability
 metadata:
