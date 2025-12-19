@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -139,14 +138,30 @@
     </div>
 
     <!-- Page Title -->
-    <h1>Page Title</h1>
-    <span class="badge">Optional Badge</span>
+    <h1>Installing and Configuring Red Hat Quay Enterprise</h1>
+    <span class="badge">Preparing the Environment to Deploy Red Hat Quay which holds the whole sections:
+      <ul>
+        <li>Security - Certificate CA in anchors</li>
+        <li>Storage - Ensure storage dir have minimum 30Gib</li>
+        <li>Network - Create a dedicated podman network using <strong> quay </strong> user.</li>
+        <li>Administration - Create quay user and activate linger </li>
+      </ul>
+    
+    </span>
 
     <!-- Intro Section -->
     <section>
-      <h2>Introduction</h2>
+      <h2>Preparing the Environment to Deploy Red Hat Quay</h2>
       <p>
-        Short introductory text explaining the purpose of this page.
+        <ul>
+          <li>Ensuring That a Certificate Authority Is Available</li>
+          <li>Installing Container Tools</li>
+          <li>Creating a Dedicated User</li>
+          <li>Authenticating to the Red Hat Registry</li>
+          <li>Creating a Private Podman Network for the Services</li>
+          <li>Creating Storage Locations for Data and Configuration Files</li>
+
+        </ul>
       </p>
     </section>
 
@@ -154,18 +169,175 @@
 
     <!-- Content Section -->
     <section>
-      <h2>Section Title</h2>
+      <h2>Ensuring That a Certificate Authority Is Available</h2>
       <p>Description or explanation.</p>
 
-      <h3>Subsection</h3>
-      <ul>
-        <li>Bullet point</li>
-        <li>Bullet point</li>
-      </ul>
+      <h3>Create a CA directory and generate a private key and a self-signed certificate.</h3>
+     
+        <pre><code>
+        [user@host ~]$ mkdir ca
+        [user@host ~]$ cd ca
 
-      <pre><code># Code block
-command --example</code></pre>
+        [user@host ca]$ openssl genrsa -out ca-key.pem -aes256 \
+        -passout pass:yourpassword 8192
+
+        [user@host ca]$ openssl req -new -x509 -key ca-key.pem \
+        -passin pass:yourpassword -days 3650 -out ca-cert.pem \
+        -subj "/C=XX/ST=State/L=City/O=Org/OU=Dept/CN=CA Name"
+
+        [user@host ca]$ cd
+        </code></pre>
+
     </section>
+    <section>
+          <h3>Ensure that all systems trust the certificate, by installing it in their /etc/pki/ca-trust directory.</h3>
+          <pre><code>
+          [user@host ~]$ sudo cp ./ca/ca-cert.pem \
+          /etc/pki/ca-trust/source/anchors/lab-ca.pem
+
+          [user@host ca]$ sudo update-ca-trust
+
+          [user@host ca]$ trust list --filter=ca-anchors | grep -3 "CA Name"
+
+          pkcs11:id=%37%6F%D0%6F%7A%09%B0%25%A3%FC%FA%8D%11%C1%9B%A2%11%13%D9%6D;type=cert
+              type: certificate
+              label: CA Name
+              trust: anchor
+              category: authority
+
+          </code></pre>
+
+    </section>
+
+        <section>
+          <h3>After the self-signed certificate is created and trusted, you must configure a CA. An example configuration file to put into the ca/openssl.cnf file looks as follows:</h3>
+
+          <pre><code>
+            [ ca ]
+            default_ca      = CA_default
+
+            [ CA_default ]
+            dir             = /home/user/ca/ca-data
+            serial          = $dir/serial
+            database        = $dir/index.txt
+            new_certs_dir   = $dir/newcerts
+
+            certificate     = /home/user/ca/ca-cert.pem
+            private_key     = /home/user/ca/ca-key.pem
+
+            default_days    = 365
+            default_crl_days= 30
+            default_md      = sha256
+
+            policy          = policy_any
+            email_in_dn     = no
+
+            name_opt        = ca_default
+            cert_opt        = ca_default
+            copy_extensions = copy
+
+            [ policy_any ]
+            countryName            = supplied
+            stateOrProvinceName    = optional
+            organizationName       = optional
+            organizationalUnitName = optional
+            commonName             = supplied
+            emailAddress           = optional
+          </code></pre>
+
+    </section>
+
+    <section>
+          <h3>Create three important files for the CA: a new certificate storage directory, an index of issued certificates, and a serial number tracker.</h3>
+
+          <pre><code>
+            [user@host ~]$ cd ca
+            [user@host ca]$ mkdir -p ca-data/newcerts
+            [user@host ca]$ touch ca-data/index.txt
+            [user@host ca]$ echo 0000 > ca-data/serial
+          </code></pre>
+    </section>
+
+    <section>
+        <h3> The directory structure should look as follows: </h3>
+          <pre><code>
+            [user@host ca]$ tree ./
+            ./
+            ├── ca-cert.pem
+            ├── ca-key.pem
+            ├── ca-data
+            │   ├── index.txt
+            │   ├── newcerts
+            │   └── serial
+            └── openssl.cnf
+          </code></pre>
+
+        <h3>Install the container-tools package. </h3> 
+          <pre><code>
+          [user@host ~]$ sudo dnf install container-tools
+          ...output omitted...
+          </code></pre>
+
+    </section>
+    <section>
+       <h3> Creating a Dedicated User </h3>
+        <pre><code>
+        [user@host ~]$ sudo useradd quay
+        [user@host ~]$ sudo passwd quay
+
+        Enable lingering for the quay user.
+        [user@host ~]$ sudo loginctl enable-linger quay
+        </code</pre>
+    </section>
+
+    <section>
+      <h3>Authenticating to the Red Hat Registry</h3>
+        <pre><code>      
+          [quay@host ~]$ podman login registry.redhat.io
+          Username: my-redhat-username
+          Password: my-redhat-password
+          Login Succeeded!
+
+          [quay@host ~]$ mkdir .docker
+          [quay@host ~]$ cp /run/user/$(id -u)/containers/auth.json .docker/config.json
+        </code</pre>        
+    </section>
+
+    <section>
+      <h3>Creating a Private Podman Network for the Services</h3>    
+        <pre><code>      
+          [quay@host ~]$ podman network create quay
+          quay
+
+          [quay@host ~]$ podman network inspect quay
+          [
+              {
+                    "name": "quay",
+                    ...output omitted...
+            <strong>"dns_enabled": true, </strong>
+                    "ipam_options": {
+                        "driver": "host-local"
+                    },
+                    "containers": {}
+              }
+          ]
+        </code</pre>        
+    </section>
+    <section>
+      <h3>Creating Storage Locations for Data and Configuration Files</h3>    
+        <pre><code>  
+          [user@host ~]$ df -h /storage/
+          Filesystem      Size  Used Avail Use% Mounted on
+          /dev/sdb1       120G   35G   86G  29% /storage
+
+          [user@host ~]$ sudo mkdir /storage/quay
+          [user@host ~]$ sudo mkdir /storage/postgresql
+        </code</pre>        
+    </section>
+
+
+
+
 
     <hr>
 
@@ -182,9 +354,8 @@ command --example</code></pre>
 
     <!-- Footer -->
     <footer>
-      © Study Sheet Template
+      © Study Sheet Template - Yassine
     </footer>
 
   </div>
 </body>
-</html>
