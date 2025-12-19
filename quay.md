@@ -300,7 +300,7 @@
 
           [quay@host ~]$ mkdir .docker
           [quay@host ~]$ cp /run/user/$(id -u)/containers/auth.json .docker/config.json
-        </code</pre>        
+        </code></pre>        
     </section>
 
     <section>
@@ -321,7 +321,7 @@
                     "containers": {}
               }
           ]
-        </code</pre>        
+        </code></pre>        
     </section>
     <section>
       <h3>Creating Storage Locations for Data and Configuration Files</h3>    
@@ -332,7 +332,7 @@
 
           [user@host ~]$ sudo mkdir /storage/quay
           [user@host ~]$ sudo mkdir /storage/postgresql
-        </code</pre>        
+        </code></pre>        
     </section>
 
 
