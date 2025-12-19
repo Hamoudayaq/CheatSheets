@@ -139,12 +139,12 @@
 
     <!-- Page Title -->
     <h1>Installing and Configuring Red Hat Quay Enterprise</h1>
-    <span class="badge">Preparing the Environment to Deploy Red Hat Quay which holds the whole sections:
+    <span class="badge">Prerequisites:
       <ul>
         <li>Security - Certificate CA in anchors</li>
         <li>Storage - Ensure storage dir have minimum 30Gib</li>
         <li>Network - Create a dedicated podman network using <strong> quay </strong> user.</li>
-        <li>Administration - Create quay user and activate linger </li>
+        <li>User settings - Create quay user and activate linger </li>
       </ul>
     
     </span>
@@ -277,8 +277,8 @@
           [user@host ~]$ sudo dnf install container-tools
           ...output omitted...
           </code></pre>
-
     </section>
+
     <section>
        <h3> Creating a Dedicated User </h3>
         <pre><code>
@@ -287,7 +287,7 @@
 
         Enable lingering for the quay user.
         [user@host ~]$ sudo loginctl enable-linger quay
-        </code</pre>
+        </code></pre>
     </section>
 
     <section>
