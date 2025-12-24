@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -133,13 +131,6 @@
       </ul>
     </section>
 
-    <!-- Prerequisites -->
-    <section>
-      <h2>Prerequisites</h2>
-      <p>As the <code>student</code> user on the <code>workstation</code> machine, prepare your environment:</p>
-      <pre><code>[student@workstation ~]$ lab start quay-depend</code></pre>
-    </section>
-
     <!-- Instructions -->
     <section>
       <h2>Instructions</h2>
@@ -242,10 +233,6 @@ WantedBy=default.target</code></pre>
         <li>Move to a readable directory for container commands:
           <pre><code>[lab@registry ~]$ cd /tmp</code></pre>
         </li>
-        <li>Verify container UID:
-          <pre><code>[lab@registry tmp]$ sudo -u quay skopeo inspect --config docker://registry.redhat.io/rhel9/postgresql-15:latest | jq .config.User
-"26"</code></pre>
-        </li>
         <li>Correct ownership with podman unshare:
           <pre><code>[lab@registry tmp]$ sudo -u quay podman unshare chown -R 26 /local/quay-db/</code></pre>
         </li>
@@ -262,28 +249,10 @@ WantedBy=default.target</code></pre>
         <li>Start services:
           <pre><code>[lab@registry tmp]$ sudo systemctl -M quay@ --user start quay-pgsql.service quay-redis.service</code></pre>
         </li>
-        <li>Verify running status:
-          <pre><code>[lab@registry tmp]$ sudo systemctl -M quay@ --user --no-pager status quay-pgsql.service quay-redis.service</code></pre>
-        </li>
         <li>Inspect containers:
           <pre><code>[lab@registry tmp]$ sudo -u quay podman ps</code></pre>
         </li>
       </ol>
-
-      <h3>5. Exit SSH session</h3>
-      <pre><code>[lab@registry tmp]$ exit
-Connection to registry.ocp4.example.com closed.
-[student@workstation ~]$</code></pre>
-    </section>
-
-    <!-- Finish -->
-    <section>
-      <h2>Finish Exercise</h2>
-      <p>On the <code>workstation</code> machine, complete the exercise:</p>
-      <pre><code>[student@workstation ~]$ lab finish quay-depend</code></pre>
-      <div class="key">
-        <strong>Key Point:</strong> Ensures resources from previous exercises do not interfere with future labs.
-      </div>
     </section>
 
     <footer>
