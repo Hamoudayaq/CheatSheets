@@ -134,7 +134,7 @@
     <div class="actions">
       <a href="#" class="btn">Home</a>
       <a href="#" class="btn">Back</a>
-      <a href="#" class="btn">Section</a>
+      <a href="./quay-dependencies.md" class="btn">Dependencies</a>
     </div>
 
     <!-- Page Title -->
