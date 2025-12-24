@@ -74,21 +74,26 @@ If the TLS option is omitted, then an insecure route is created.</p>
 <pre class="screen">[user@host ~]$ <strong class="userinput"><code>oc annotate route route-example \
 router.openshift.io/cookie_name=myapp</code></strong></pre>
 
-<li class="step"><p>Use the <code class="code">curl</code> command to save the <code class="code">hello</code> cookie to the <code class="code">/tmp/cookie_jar</code> file.
-Afterward, confirm that the <code class="code">hello</code> cookie exists in the <code class="code">/tmp/cookie_jar</code> file.</p><pre class="screen">[student@workstation ~]$ <strong class="userinput"><code>curl satir-web-applications.apps.ocp4.example.com \
-  -c /tmp/cookie_jar</code></strong>
-Welcome to Red Hat Training, from satir-app-787b7d7858-q7bhj</pre><pre class="screen">[student@workstation ~]$ <strong class="userinput"><code>cat /tmp/cookie_jar</code></strong>
-<span class="emphasis"><em>...output omitted...</em></span>
-#HttpOnly_satir-web-applications.apps.ocp4.example.com	FALSE	/	FALSE	0	hello	b7dd73d32003e513a072e25a32b6c881</pre></li>
+<p>Use the <code class="code">curl</code> command to save the <code class="code">hello</code> cookie to the <code class="code">/tmp/cookie_jar</code> file.
+Afterward, confirm that the <code class="code">hello</code> cookie exists in the <code class="code">/tmp/cookie_jar</code> file.</p>
 
-<li class="step"><p>The <code class="code">hello</code> cookie provides session stickiness for connections to the <code class="code">satir</code> route.
+<pre class="screen">[student@workstation ~]$ <strong class="userinput"><code>curl satir-web-applications.apps.ocp4.example.com \
+  -c /tmp/cookie_jar</code></strong>
+Welcome to Red Hat Training, from satir-app-787b7d7858-q7bhj</pre>
+
+<pre class="screen">[student@workstation ~]$ <strong class="userinput"><code>cat /tmp/cookie_jar</code></strong>
+<span class="emphasis"><em>...output omitted...</em></span>
+#HttpOnly_satir-web-applications.apps.ocp4.example.com	FALSE	/	FALSE	0	hello	b7dd73d32003e513a072e25a32b6c881</pre>
+
+
+<p>The <code class="code">hello</code> cookie provides session stickiness for connections to the <code class="code">satir</code> route.
 Use the <code class="code">curl</code> command and the <code class="code">hello</code> cookie in the <code class="code">/tmp/cookie_jar</code> file to connect to the <code class="code">satir</code> route again.
 Confirm that you are connected to the same pod that handled the request in the previous step.</p><pre class="screen">[student@workstation ~]$ <strong class="userinput"><code>for i in {1..10}; do \
   curl satir-web-applications.apps.ocp4.example.com -b /tmp/cookie_jar; done</code></strong>
 Welcome to Red Hat Training, from satir-app-787b7d7858-q7bhj
 Welcome to Red Hat Training, from satir-app-787b7d7858-q7bhj
 Welcome to Red Hat Training, from satir-app-787b7d7858-q7bhj
-<span class="emphasis"><em>...output omitted...</em></span></pre></li>
+<span class="emphasis"><em>...output omitted...</em></span></pre>
 
 
 
