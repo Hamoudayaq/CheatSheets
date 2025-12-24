@@ -49,7 +49,11 @@
       const res = await fetch(page);
       const text = await res.text();
       const titleMatch = text.match(/<h1>(.*?)<\/h1>/i);
-      const title = titleMatch ? titleMatch[1] : page;
+      const fileName = page.split('/').pop();
+      const title = fileName
+        .replace('.html', '')
+        .replace(/[-_]/g, ' ')
+        .replace(/\b\w/g, c => c.toUpperCase());
 
       const btn = document.createElement('a');
       btn.href = page;
